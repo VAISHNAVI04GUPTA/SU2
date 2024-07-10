@@ -1,0 +1,1 @@
+common_src += files(['embed_python.cpp'])

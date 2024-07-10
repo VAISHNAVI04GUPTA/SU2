@@ -18,6 +18,7 @@ subdir('interface_interpolation')
 subdir('fem')
 subdir('grid_movement')
 subdir('adt')
+subdir('embedder')
 
 if get_option('enable-normal')
   common = static_library('SU2Common',

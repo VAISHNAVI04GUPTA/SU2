@@ -2,21 +2,21 @@
 
 #include <sstream>
 #include <stdio.h>
-
+#include <utility>
 #include "../../../Common/include/CConfig.hpp"
-#include "embed_python.hpp"
+#include "../../../Common/include/embedder/embed_python.hpp"
 
 TEST_CASE("Embed_python", "[python_embedding]")
 {   
     Embed_Python result;
 
-    su2double x_var=2.2;
-    su2double a_var=3.3;
-    su2double b_var=4.4;
-    su2double val_var;
-    su2double ans_var;
+    double x_var=2.2;
+    double a_var=3.3;
+    double b_var=4.4;
+    double val_var;
+    double ans_var;
     
-    result.sqaure(x_var, &val_var);
+    result.square(x_var, &val_var);
     CHECK(val_var==Approx(4.84));
 
     result.addition(a_var,b_var,&ans_var);
