@@ -82,6 +82,7 @@ def run(
     own_cool=True,
     own_mel=True,
     own_mlpcpp=True,
+    own_pybind11=True,
 ):
 
     # Set up the build environment, i.e. clone or download submodules
@@ -95,6 +96,7 @@ def run(
         own_cool=own_cool,
         own_mel=own_mel,
         own_mlpcpp=own_mlpcpp,
+        own_pybind11=own_pybind11,
     )
 
     if own_meson:
@@ -142,6 +144,11 @@ if __name__ == "__main__":
         help="do not download copy of MLpCpp",
         action="store_false",
     )
+    parser.add_argument(
+        "--no-pybind11",
+        help="do not download copy of Pybind",
+        action="store_false",
+    )
     args = parser.parse_args()
 
     run(
@@ -153,4 +160,5 @@ if __name__ == "__main__":
         own_cool=args.no_coolprop,
         own_mel=args.no_mel,
         own_mlpcpp=args.no_mlpcpp,
+        own_pybind11=args.no_pybind11,
     )

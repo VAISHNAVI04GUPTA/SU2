@@ -49,6 +49,7 @@ def init_submodules(
     own_cool=True,
     own_mel=True,
     own_mlpcpp=True,
+    own_pybind11=True,
 ):
 
     cur_dir = sys.path[0]
@@ -83,6 +84,7 @@ def init_submodules(
     coolprop_name = "CoolProp"
     mel_name = "MEL"
     mlpcpp_name = "MLPCpp"
+    pybind11_name="Pybind11"
 
     base_path = cur_dir + os.path.sep + "externals" + os.path.sep
     alt_name_medi = base_path + "medi"
@@ -91,6 +93,7 @@ def init_submodules(
     alt_name_meson = base_path + "meson"
     alt_name_ninja = base_path + "ninja"
     alt_name_mel = base_path + "mel"
+    alt_name_pyb = cur_dir + os.path.sep + "external" + os.path.sep+"pybind11"
     alt_name_mpp = cur_dir + os.path.sep + "subprojects" + os.path.sep + "Mutationpp"
     alt_name_coolprop = cur_dir + os.path.sep + "subprojects" + os.path.sep + "CoolProp"
     alt_name_mlpcpp = cur_dir + os.path.sep + "subprojects" + os.path.sep + "MLPCpp"

@@ -111,6 +111,8 @@ if get_option('enable-cgns')
   su2_cpp_args += '-DHAVE_CGNS'
 endif
 
+
+
 # check for non-debug build
 if get_option('buildtype')!='debug'
   su2_cpp_args += '-DNDEBUG'
@@ -294,6 +296,20 @@ endif
 if get_option('enable-mlpcpp')
   su2_cpp_args += '-DHAVE_MLPCPP'
 endif
+
+
+pybind11_dep = dependency('pybind11', required: true)
+
+
+
+
+pyb_dep = declare_dependency(include_directories: 'external/pybind11')
+su2_deps += pyb_dep
+
+if get_option('enable-pybind11')
+  su2_cpp_args += '-DHAVE_PYBIND11'
+endif
+
 
 if omp and get_option('enable-autodiff')
   py = find_program('python3','python')

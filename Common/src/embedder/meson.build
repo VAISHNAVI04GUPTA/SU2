@@ -1,1 +1,1 @@
-common_src += files(['embed_python.cpp'])
+common_src += files(['embed_python.cpp','embed_pybind.cpp'])

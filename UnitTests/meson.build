@@ -10,6 +10,8 @@ su2_cfd_tests = files(['Common/geometry/primal_grid/CPrimalGrid_tests.cpp',
                        'Common/toolboxes/CQuasiNewtonInvLeastSquares_tests.cpp',
                        'Common/toolboxes/C1DInterpolation_tests.cpp',
                        'Common/vectorization.cpp',
+                       'Common/embedder/embed_python_test.cpp',
+                       'Common/embedder/embed_pybind_tests.cpp',
                        'Common/toolboxes/ndflattener_tests.cpp',
                        'Common/containers/CLookupTable_tests.cpp',
                        'Common/toolboxes/multilayer_perceptron/CLookUp_ANN_tests.cpp',
@@ -64,3 +66,4 @@ if get_option('enable-tests')
     test('Catch2 test driver (DD)', test_driver_DD)
   endif
 endif
+
