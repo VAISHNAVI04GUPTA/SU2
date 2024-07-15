@@ -13,7 +13,7 @@ if not fsmod.exists('su2preconfig.timestamp')
 endif
 
 pymod = import('python')
-python = pymod.find_installation()
+python = pymod.find_installation('python3')
 
 su2_cpp_args = []
 su2_deps     = [declare_dependency(include_directories: 'externals/CLI11')]
@@ -296,14 +296,31 @@ endif
 if get_option('enable-mlpcpp')
   su2_cpp_args += '-DHAVE_MLPCPP'
 endif
+'''
+if get_option('enable-pybind11')
+  if build_machine.cpu_family() == 'x86' or build_machine.cpu_family() == 'x86_64'
+    cmake = import('cmake')
+    cmake_opts = cmake.subproject_options()
+    cmake_opts.set_override_option('warning_level', '0')
+    cmake_opts.add_cmake_defines({
+      'PYBIND11_STATIC_LIBRARY': true,
+      'CMAKE_MAKE_PROGRAM': join_paths(meson.project_source_root(), 'ninja'),
+      'CMAKE_POSITION_INDEPENDENT_CODE': 'ON'
+    })
+    pybind11_subproj = cmake.subproject('pybind11', options: cmake_opts)
+    pybind11_dep = pybind11_subproj.dependency('pybind11')
+    su2_deps     += pybind11_dep
+    su2_cpp_args += '-DHAVE_PYBIND11'
+  else
+    message('WARNING: CPU is not x86, skipping Pybind11 dependency.')
+  endif
+endif
 
 
-pybind11_dep = dependency('pybind11', required: true)
 
 
-
-
-pyb_dep = declare_dependency(include_directories: 'external/pybind11')
+'''
+pyb_dep = declare_dependency(include_directories: 'subprojects/pybind11')
 su2_deps += pyb_dep
 
 if get_option('enable-pybind11')

@@ -1,11 +1,12 @@
 #include "catch.hpp"
+//#include "../../../external/pybind11/include/pybind11/python3.8/Python.h"
 
 #include <sstream>
 #include <stdio.h>
 #include <utility>
 #include "../../../Common/include/CConfig.hpp"
 #if defined(HAVE_PYBIND11)
-#include "../../../external/pybind11/include/pybind11/embed.h"
+#include "../../../Common/include/embedder/embed_pybind.hpp"
 #define USE_PYBIND11
 #endif
 

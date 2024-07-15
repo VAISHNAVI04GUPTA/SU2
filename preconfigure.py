@@ -74,7 +74,7 @@ def build_ninja():
 
 
 def run(
-    own_meson=False,
+    own_meson=True,
     own_codi=True,
     own_medi=True,
     own_opdi=True,
