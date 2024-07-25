@@ -22,7 +22,7 @@ TEST_CASE("Embed_pybind11", "[python_embedding]")
     int val_var;
     
     
-    result.calculate(x_var,y_var, &val_var);
+    result.calculate(x_var,y_var,&val_var);
     CHECK(val_var==Approx(6));
 
 }

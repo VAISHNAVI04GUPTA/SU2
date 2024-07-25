@@ -296,7 +296,7 @@ endif
 if get_option('enable-mlpcpp')
   su2_cpp_args += '-DHAVE_MLPCPP'
 endif
-'''
+
 if get_option('enable-pybind11')
   if build_machine.cpu_family() == 'x86' or build_machine.cpu_family() == 'x86_64'
     cmake = import('cmake')
@@ -305,27 +305,44 @@ if get_option('enable-pybind11')
     cmake_opts.add_cmake_defines({
       'PYBIND11_STATIC_LIBRARY': true,
       'CMAKE_MAKE_PROGRAM': join_paths(meson.project_source_root(), 'ninja'),
-      'CMAKE_POSITION_INDEPENDENT_CODE': 'ON'
+      'CMAKE_POSITION_INDEPENDENT_CODE': 'ON',
+      'CMAKE_TRACE': 'ON',
+      'CMAKE_TRACE_FORMAT': 'human',
+      'CMAKE_TRACE_REDIRECT': join_paths(meson.project_build_root(), 'cmake_trace.txt')
     })
     pybind11_subproj = cmake.subproject('pybind11', options: cmake_opts)
-    pybind11_dep = pybind11_subproj.dependency('pybind11')
+    pybind11_dep = pybind11_subproj.dependency('pybind11_headers')
     su2_deps     += pybind11_dep
     su2_cpp_args += '-DHAVE_PYBIND11'
+
   else
     message('WARNING: CPU is not x86, skipping Pybind11 dependency.')
   endif
 endif
 
+python_dep=python.dependency()
+su2_deps += python_dep
+include_dirs = include_directories(
+  python_dep.get_variable('includedir')
+)
+
+cpp_args = [
+  '-I' + python_dep.get_variable('includedir'),
+  '-DHAVE_PYBIND11'
+]
+
+link_args = [
+  '-L' + python_dep.get_variable('libdir'),
+  '-lpython3.8'  # Ensure this matches your Python version
+]
 
 
 
-'''
-pyb_dep = declare_dependency(include_directories: 'subprojects/pybind11')
-su2_deps += pyb_dep
+cmake_targets = pybind11_subproj.target_list()
+message('Available CMake targets:\n - ' + '\n - '.join(cmake_targets))
 
-if get_option('enable-pybind11')
-  su2_cpp_args += '-DHAVE_PYBIND11'
-endif
+
+
 
 
 if omp and get_option('enable-autodiff')
@@ -403,7 +420,7 @@ message('''---------------------------------------------------------------------
 '''.format(get_option('prefix')+'/bin', meson.project_source_root(), get_option('enable-tecio'), get_option('enable-cgns'),
            get_option('enable-autodiff'), get_option('enable-directdiff'), get_option('enable-pywrapper'), get_option('enable-mkl'),
            get_option('enable-openblas'), get_option('enable-pastix'), get_option('enable-mixedprec'), get_option('enable-librom'), get_option('enable-coolprop'),
-           get_option('enable-mlpcpp'), meson.project_build_root().startswith(meson.project_source_root()) ? meson.project_build_root().split('/')[-1] : meson.project_build_root()))
+           get_option('enable-mlpcpp'), get_option('enable-pybind11'),meson.project_build_root().startswith(meson.project_source_root()) ? meson.project_build_root().split('/')[-1] : meson.project_build_root()))
 
 if get_option('enable-mpp')
   if get_option('install-mpp')
@@ -427,6 +444,17 @@ if get_option('enable-librom')
   message(''' To run SU2 with libROM library, add this line to your .bashrc file:
 
           export LD_LIBRARY_PATH=@0@/build/:$LD_LIBRARY_PATH
+
+          '''.format(get_option('librom_root')))
+
+endif
+
+if get_option('enable-pybind11')
+  message(''' To run SU2 with Pybind11 library, add this line to your .bashrc file:
+
+          export PYBIND11_INCLUDE_DIR=$SU2_HOME/subprojects/pybind11/include
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_HOME/<build_dir>/subprojects/pybind11
+
 
           '''.format(get_option('librom_root')))
 
