@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../../../build/Common/src/embedder')
+
 import calc
 def factorial(a):
     l=[]
@@ -10,11 +13,8 @@ def factorial(a):
 
 
     
-    return l[1]
+    return l[-1]
 
-mbdr = calc.Embed_Pybind()
-x_var = 42
-y_var = 2
-
-result=mbdr.calculate(x_var,y_var,factorial)
+ins3 = calc.Embed_Pybind()
+result=ins3.calculate(4,6,factorial)
 print("Highest factor:",result)
