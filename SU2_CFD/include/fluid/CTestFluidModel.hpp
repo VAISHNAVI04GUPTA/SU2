@@ -1,15 +1,21 @@
 #pragma once
 
 #include <vector>
-#include "../../../Common/include/containers/CLookUpTable.hpp"
+
 #if defined(HAVE_PYBIND11)
 
 
 #define USE_PYBIND11
 #endif
-#include "CFluidModel.hpp"
+
 #include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
-class TestFluidModel final: public CFluidModel
+/*!
+ * \class CTestFluidModel
+ * \brief Template class for fluid model definition using ideal gas laws for
+ * fluid dynamic state definition.
+ * \author: E.C.Bunschoten.
+ */
+class TestFluidModel 
 {
 private:
     double P; // pressure value
@@ -19,15 +25,15 @@ private:
     double R_gas; // fluid gas constant
 public:
 
-    TestFluidModel(double P_in, double T_in, double rho_in) ;
+    //TestFluidModel(double P_in, double T_in, double rho_in) ;
 
-    ~TestFLuidModel();
+    
 
-    void SetTDState_PT(double P, double T) override;
+    void SetTDState_PT(double P, double T) ;
 
-    void SetTDState_Prho(double P, double rho) override;
+    void SetTDState_Prho(double P, double rho) ;
 
-    void SetTDState_Trho(double T, double rho) override;
+    void SetTDState_rhoT( double rho,double T) ;
 
     double SetTDState_Custom(double P, double T, pybind11::function func);
     

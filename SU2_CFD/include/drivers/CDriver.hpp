@@ -34,8 +34,15 @@
 #include "../interfaces/CInterface.hpp"
 #include "../solvers/CSolver.hpp"
 #include "CDriverBase.hpp"
+#if defined(HAVE_PYBIND11)
 
+
+#define USE_PYBIND11
+#endif
+
+#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
 using namespace std;
+namespace py = pybind11;
 
 class CInterpolator;
 class CIteration;
@@ -103,6 +110,9 @@ class CDriver : public CDriverBase {
   /*!
    * \brief Initialize containers.
    */
+  void SetTDState_T_function(py::function func);
+
+  CConfig* mConfig;
   void InitializeContainers();
 
   /*!

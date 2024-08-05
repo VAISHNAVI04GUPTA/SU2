@@ -13,7 +13,8 @@ su2_cfd_src += files(['fluid/CFluidModel.cpp',
                       'fluid/CNEMOGas.cpp',
                       'fluid/CMutationTCLib.cpp',
                       'fluid/CSU2TCLib.cpp',
-                      'fluid/CDataDrivenFluid.cpp'])
+                      'fluid/CDataDrivenFluid.cpp',
+                      'fluid/CTestFluidModel.cpp'])
 
 su2_cfd_src += files(['output/COutputFactory.cpp',
                       'output/CAdjElasticityOutput.cpp',
@@ -234,3 +235,10 @@ if get_option('enable-directdiff')
                           cpp_args: ['-fPIC'] + [default_warning_flags, su2_cpp_args, codi_for_args])
 endif
 
+python.extension_module('density',
+    'fluid/CTestFluidModel.cpp',
+    install: true,
+    dependencies : su2_deps+[python_dep],
+    include_directories: include_dirs,
+    cpp_args: cpp_args
+)
