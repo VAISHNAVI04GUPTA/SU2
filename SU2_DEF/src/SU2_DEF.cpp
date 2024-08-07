@@ -26,7 +26,13 @@
  */
 
 #include "../include/drivers/CDeformationDriver.hpp"
+#if defined(HAVE_PYBIND11)
+#include <Python.h>
 
+#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
+namespace py = pybind11;
+#define USE_PYBIND11
+#endif
 int main(int argc, char* argv[]) {
   char config_file_name[MAX_STRING_SIZE];
 

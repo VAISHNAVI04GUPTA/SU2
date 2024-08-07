@@ -26,7 +26,13 @@
  */
 
 #include "../include/SU2_CFD.hpp"
+#if defined(HAVE_PYBIND11)
+#include <Python.h>
 
+#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
+namespace py = pybind11;
+#define USE_PYBIND11
+#endif
 /* LIBXSMM include files, if supported. */
 #ifdef HAVE_LIBXSMM
 #include "libxsmm.h"

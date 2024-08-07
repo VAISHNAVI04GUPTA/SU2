@@ -14,6 +14,7 @@ endif
 
 pymod = import('python')
 python = pymod.find_installation('python3')
+pythonver = python.language_version()
 
 su2_cpp_args = []
 su2_deps     = [declare_dependency(include_directories: 'externals/CLI11')]
@@ -320,7 +321,11 @@ if get_option('enable-pybind11')
   endif
 endif
 
-python_dep=python.dependency()
+python_dep = dependency('python-@0@-embed'.format(pythonver), version: '>=3', required: false)
+if not python_dep.found()
+    python_dep = dependency('python-@0@'.format(pythonver))
+endif
+
 su2_deps += python_dep
 include_dirs = include_directories(
   python_dep.get_variable('includedir')
@@ -330,17 +335,19 @@ cpp_args = [
   '-I' + python_dep.get_variable('includedir'),
   '-DHAVE_PYBIND11'
 ]
+su2_cpp_args += cpp_args
 
-link_args = [
-  '-L' + python_dep.get_variable('libdir'),
-  '-lpython3.8'  # Ensure this matches your Python version
-]
+python_lib_path = '/usr/lib/x86_64-linux-gnu'  # Update this path if necessary
+python_lib = '-lpython3.8'
+
+link_args = [python_lib, '-L' + python_lib_path]
 
 
+if get_option('enable-pybind11')
+  cmake_targets = pybind11_subproj.target_list()
+  message('Available CMake targets:\n - ' + '\n - '.join(cmake_targets))
 
-cmake_targets = pybind11_subproj.target_list()
-message('Available CMake targets:\n - ' + '\n - '.join(cmake_targets))
-
+endif
 
 
 
@@ -373,15 +380,7 @@ subdir('UnitTests')
 if get_option('enable-pywrapper')
   subdir('SU2_PY/pySU2')
 endif
-'''
-if get_option('enable-pybind11')
-  pybind11_dir = 'external/pybind11'
-  subdir(pybind11_dir)
-  pybind11_dep = dependency('pybind11', required: true, fallback: ['pybind11', 'dummy'])
-  su2_deps += pybind11_dep
-  su2_cpp_args += '-DHAVE_PYBIND11'
-endif
-'''
+
 message('''-------------------------------------------------------------------------
          |    ___ _   _ ___                                                      |
          |   / __| | | |_  )   Release 8.0.1 "Harrier"                           |
@@ -453,7 +452,7 @@ if get_option('enable-pybind11')
   message(''' To run SU2 with Pybind11 library, add this line to your .bashrc file:
 
           export PYBIND11_INCLUDE_DIR=$SU2_HOME/subprojects/pybind11/include
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_HOME/<build_dir>/subprojects/pybind11
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_RUN/usr/lib/x86_64-linux-gnu
 
 
           '''.format(get_option('librom_root')))

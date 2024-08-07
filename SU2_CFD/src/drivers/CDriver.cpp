@@ -102,10 +102,8 @@
 #include <ittnotify.h>
 #endif
 #include <cfenv>
-#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
-#include "../../../subprojects/pybind11/include/pybind11/functional.h"
 
-namespace py = pybind11;
+
 
 CDriver::CDriver(char* confFile, unsigned short val_nZone, SU2_Comm MPICommunicator, bool dummy_geo) :
 CDriverBase(confFile, val_nZone, MPICommunicator), StopCalc(false), fsi(false), fem_solver(false), dry_run(dummy_geo) {
@@ -298,12 +296,12 @@ CDriverBase(confFile, val_nZone, MPICommunicator), StopCalc(false), fsi(false), 
   StartTime = SU2_MPI::Wtime();
 
 }
-
-void CDriver::SetTDState_T_function(pybind11::function func) {
+/*void CDriver::SetTDState_T_function(pybind11::function func) {
     double rho = func(300.0).cast<double>();  // Ensure the Python function returns an int
     cout<<rho<<endl;
     //config->SetCustomTD_TFunction(func);
-}
+}*/
+
 /*// pybind11 module definition
 PYBIND11_MODULE(test, m) {
     py::class_<CDriver>(m, "CDriver")

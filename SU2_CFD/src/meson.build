@@ -1,4 +1,10 @@
+# Find the Python library and include directories
+python = import('python').find_installation('python3')
+
+include_directories('/usr/include/python3.8')
+
 su2_cfd_include = include_directories('./')
+
 su2_cfd_src = files(['definition_structure.cpp',
                      'python_wrapper_structure.cpp',
                      'CMarkerProfileReaderFVM.cpp'])
@@ -235,10 +241,14 @@ if get_option('enable-directdiff')
                           cpp_args: ['-fPIC'] + [default_warning_flags, su2_cpp_args, codi_for_args])
 endif
 
+
+
+
 python.extension_module('density',
     'fluid/CTestFluidModel.cpp',
     install: true,
+    install_dir: '../../TestCases/py_wrapper/TestFluidModel',
     dependencies : su2_deps+[python_dep],
     include_directories: include_dirs,
-    cpp_args: cpp_args
+    cpp_args: su2_cpp_args
 )
