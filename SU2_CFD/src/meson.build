@@ -1,7 +1,7 @@
 # Find the Python library and include directories
 python = import('python').find_installation('python3')
 
-include_directories('/usr/include/python3.8')
+
 
 su2_cfd_include = include_directories('./')
 

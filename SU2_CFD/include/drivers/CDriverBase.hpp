@@ -114,7 +114,7 @@ class CDriverBase {
 
 /// \addtogroup PySU2
 /// @{
-  void SetTDState_T_function(py::function func);
+  double SetTDState_T_function(py::function func);
   /*!
    * \brief Get the list of available outputs.
    * \return List of output names.

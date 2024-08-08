@@ -36,6 +36,8 @@ def main():
   except TypeError as exception:
     print('A TypeError occured in pysu2.CDriver : ', exception)
     raise
+  
+  #
 
   # Get the ID of the marker we want to deform.
   AllMarkerIDs = SU2Driver.GetMarkerIndices()

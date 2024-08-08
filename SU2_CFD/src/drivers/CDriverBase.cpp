@@ -73,10 +73,10 @@ CDriverBase::CDriverBase(char* confFile, unsigned short val_nZone, SU2_Comm MPIC
 
 CDriverBase::~CDriverBase() = default;
 
-void SetTDState_T_function(py::function func){
+double CDriverBase::SetTDState_T_function(py::function func){
   double rho = func(300.0).cast<double>();  // Ensure the Python function returns an int
-  cout<<rho<<endl;
-  main_config->GetTDState_T_function();
+  return rho;
+  
 }
 
 void CDriverBase::InitializeContainers() {

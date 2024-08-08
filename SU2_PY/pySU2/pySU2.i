@@ -50,7 +50,7 @@ threads="1"
 %import "../../Common/include/code_config.hpp"
 %import "../../Common/include/basic_types/datatype_structure.hpp"
 %import "../../Common/include/parallelization/mpi_structure.hpp"
-
+//%include "../../subprojects/pybind11/include/pybind11/pybind11.h"
 %include "std_string.i"
 %include "std_vector.i"
 %include "std_pair.i"
@@ -61,6 +61,10 @@ threads="1"
   %include "mpi4py/mpi4py.i"
   %mpi4py_typemap(Comm, MPI_Comm)
 #endif
+
+namespace pybind11{
+  
+}
 
 namespace std {
    %template() vector<bool>;

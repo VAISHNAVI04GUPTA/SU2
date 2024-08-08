@@ -50,7 +50,7 @@ endif
 script_path = meson.project_source_root() / 'meson_scripts'
 
 # mpi flag
-mpi = false
+mpi = true
 
 # If custom mpi mode is enabled, include and library pathes for MPI have to be set manually to env variables
 if get_option('custom-mpi')
