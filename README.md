@@ -2,9 +2,9 @@
 
 
 
-![](logoSU2small.png)
+![](logoSU2small.png)   ![](download.png)
 
-![](download.png)
+
 
 
 
@@ -32,7 +32,7 @@
 
 
 
-<a name="_847ctqdw7nal"></a><a name="_l514hjebouue"></a>**Overview**
+##<a name="_847ctqdw7nal"></a><a name="_l514hjebouue"></a>**Overview**
 
 The primary goal of this project is to enable the **use of generic Python functions within SU2** for data-driven fluid modeling applications. By linking Python functions through the SU2 Python wrapper, we aim to enhance the robustness of thermochemical look-up operations. The [Pybind11 library](https://github.com/pybind/pybind11) facilitates this integration of Python functions into SU2.
 
@@ -41,7 +41,7 @@ This integration enables the **Pybind11 library** to communicate with the **SU2 
 Pybind11 is a lightweight header-only library that enables seamless interoperability between C++ and Python. Here, it allows us to implement performance-critical components in C++ while leveraging Python's ease of use for higher-level scripting.
 
 
-<a name="_wmydfbdy5110"></a>**Functionality**
+##<a name="_wmydfbdy5110"></a>**Functionality**
 
 Currently, SU2 exploits the capabilities of the **Python wrapper** to couple the C++ codebase with an external structural solver. To extend this functionality into Look-up table interpolation of thermodynamic data, I have worked majorly on the following subpoints:
 
@@ -71,7 +71,7 @@ The above functionality can be understood as :
 
 
 
-<a name="_fvvtkaze581p"></a><a name="_9jvjk3wlvles"></a><a name="_fzfwsyb9lbh7"></a><a name="_cskkggnz45tv"></a>**Issues Faced**
+##<a name="_fvvtkaze581p"></a><a name="_9jvjk3wlvles"></a><a name="_fzfwsyb9lbh7"></a><a name="_cskkggnz45tv"></a>**Issues Faced**
 
 It was probably debugging, wherein I spent most of my time compared to actually coding it!
 
@@ -81,7 +81,7 @@ The major issue in developing the functionality is linking the SU2 **Driver Clas
 
 The main roadblock is linking the two Python libraries (Pybind11 and Mpi4py) and using them simultaneously in SU2. 
 
-<a name="_uclww4nm4ub6"></a>**What’s Left**
+##<a name="_uclww4nm4ub6"></a>**What’s Left**
 
 The next steps in this project would include working with **mpi4py object creation** or defining a custom datatype in Pybind to link the two libraries and create a module for CDriver Classes. **There might be a possibility of writing a SWIG interface file for Pybind11 to integrate the library into pysu2 easily!**
 
@@ -90,14 +90,14 @@ These modules can then easily be imported into wrapper files, and the member fun
 Also, a complete and well-documented tutorial and demonstration must be set up to help new and experienced users fully utilize the service this project will cater to.
 
 
-<a name="_2x4i0gykvxpx"></a>**After GSoC**
+##<a name="_2x4i0gykvxpx"></a>**After GSoC**
 
 After an incredibly rewarding journey with Google Summer of Code (GSoC), I have gained invaluable experience and knowledge that extends far beyond the project itself. Working on this project has not only deepened my technical skills in C++, Python, and Pybind11 but also enriched my understanding of open-source collaboration, version control, and efficient coding practices. The challenges I faced pushed me to think critically and problem-solve effectively, fostering both professional growth and personal development. 
 
 Though the GSoC "coding phase" has ended, I will still be *unofficially* working closely with the SU2 team to complete the last part of my proposed plan, i.e, to link the Pybind11 library with pysu2 and, through the CConfig class, make the python functions readily available in any FluidModel class. Apart from this, I look forward to reviewing the code and providing well-summarized documentation as well :)
 
 
-<a name="_ny239r5uxmqn"></a>**Closing Remarks**
+##<a name="_ny239r5uxmqn"></a>**Closing Remarks**
 
 Throughout this program, the support from my mentors and the open-source community has been phenomenal. Their guidance helped me navigate complex problems and refine my approach to software development. As I close this chapter, I carry forward the lessons learned and the connections made with a renewed commitment to contributing to open-source projects in the future.
 
