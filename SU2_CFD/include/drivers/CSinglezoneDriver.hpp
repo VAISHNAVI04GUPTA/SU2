@@ -28,6 +28,14 @@
 
 #pragma once
 #include "CDriver.hpp"
+/*#if defined(HAVE_PYBIND11)
+#include <Python.h>
+#include "../../../subprojects/pybind11/include/pybind11/embed.h"
+#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
+namespace py = pybind11;
+#define USE_PYBIND11
+#endif*/
+
 
 /*!
  * \class CSinglezoneDriver
@@ -63,7 +71,7 @@ public:
    * \brief Destructor of the class.
    */
   ~CSinglezoneDriver(void) override;
-
+  //void SetTDState_T_function(pybind11::function func);
   /*!
    * \brief [Overload] Launch the computation for single-zone problems.
    */

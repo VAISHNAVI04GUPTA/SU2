@@ -2,11 +2,11 @@
 
 
 
-import density 
+import density  # type: ignore
 from math import sin 
 
 # Initiate test fluid model
-fluid_model_test = density.TestFluidModel()
+fluid_model_test = density.CTestFluidModel(101325.0,300.0,1.13)
 
 # Example calculation, computing the density based on pressure and temperature
 fluid_model_test.SetTDState_PT(2e5, 400)

@@ -31,14 +31,6 @@
 #include "../../../Common/include/toolboxes/geometry_toolbox.hpp"
 #include "../../include/variables/CPrimitiveIndices.hpp"
 #include <iostream>
-#if defined(HAVE_PYBIND11)
-#include <Python.h>
-
-#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
-namespace py = pybind11;
-#define USE_PYBIND11
-#endif
-
 
 using namespace std;
 
@@ -73,11 +65,9 @@ CDriverBase::CDriverBase(char* confFile, unsigned short val_nZone, SU2_Comm MPIC
 
 CDriverBase::~CDriverBase() = default;
 
-double CDriverBase::SetTDState_T_function(py::function func){
-  double rho = func(300.0).cast<double>();  // Ensure the Python function returns an int
-  return rho;
-  
-}
+
+
+//py::scoped_interpreter guard{};
 
 void CDriverBase::InitializeContainers() {
   /*--- Create pointers to all the classes that may be used by drivers. In general, the pointers are instantiated

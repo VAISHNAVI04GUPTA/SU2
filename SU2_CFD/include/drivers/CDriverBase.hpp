@@ -34,13 +34,7 @@
 #include "../output/COutput.hpp"
 #include "../solvers/CSolver.hpp"
 
-#if defined(HAVE_PYBIND11)
-#include <Python.h>
-#include "../../../subprojects/pybind11/include/pybind11/embed.h"
-#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
-namespace py = pybind11;
-#define USE_PYBIND11
-#endif
+
 
 
 
@@ -114,7 +108,8 @@ class CDriverBase {
 
 /// \addtogroup PySU2
 /// @{
-  double SetTDState_T_function(py::function func);
+  //void Module();
+ 
   /*!
    * \brief Get the list of available outputs.
    * \return List of output names.

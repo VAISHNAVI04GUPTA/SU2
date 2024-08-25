@@ -244,11 +244,21 @@ endif
 
 
 
-python.extension_module('density',
+python.extension_module('query',
     'fluid/CTestFluidModel.cpp',
     install: true,
-    install_dir: '../../TestCases/py_wrapper/TestFluidModel',
+    install_dir: '/home/vaishnavi/SU2/TestCases/py_wrapper/TestFluidModel',
     dependencies : su2_deps+[python_dep],
     include_directories: include_dirs,
     cpp_args: su2_cpp_args
 )
+'''
+python.extension_module('pySU2_bindings',
+    'drivers/CSinglezoneDriver.cpp',
+    install: true,
+    install_dir: '/home/vaishnavi/SU2/TestCases/py_wrapper/TestFluidModel',
+    dependencies : su2_deps+[python_dep]+ mpi_dep,
+    include_directories: include_dirs,
+    cpp_args: su2_cpp_args
+)
+'''

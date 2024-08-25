@@ -298,6 +298,9 @@ if get_option('enable-mlpcpp')
   su2_cpp_args += '-DHAVE_MLPCPP'
 endif
 
+#In order to launch SU2 succesfully with Pybind11 comment out line no. 315-332 from the CMakeLists.txt file 
+#of Pybind11 because we are building it as a subproject and not as a master project.
+
 if get_option('enable-pybind11')
   if build_machine.cpu_family() == 'x86' or build_machine.cpu_family() == 'x86_64'
     cmake = import('cmake')
@@ -321,9 +324,9 @@ if get_option('enable-pybind11')
   endif
 endif
 
-python_dep = dependency('python-@0@-embed'.format(pythonver), version: '>=3', required: false)
+python_dep = dependency('python3-embed'.format(pythonver), version: '>=3', required: false)
 if not python_dep.found()
-    python_dep = dependency('python-@0@'.format(pythonver))
+    python_dep = dependency('python3'.format(pythonver))
 endif
 
 su2_deps += python_dep
@@ -449,10 +452,14 @@ if get_option('enable-librom')
 endif
 
 if get_option('enable-pybind11')
-  message(''' To run SU2 with Pybind11 library, add this line to your .bashrc file:
+  message(''' 
+          
+          To run SU2 with Pybind11 library, add this line to your .bashrc file:
 
           export PYBIND11_INCLUDE_DIR=$SU2_HOME/subprojects/pybind11/include
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SU2_RUN/usr/lib/x86_64-linux-gnu
+          WARNING: If compilation fails with a message regarning tests directory not found error then recompile after commenting out line no. 315-332 
+          from the CMakeLists.txt file of Pybind11 because we are building it as a subproject and not as a master project.
 
 
           '''.format(get_option('librom_root')))

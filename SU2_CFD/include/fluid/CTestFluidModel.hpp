@@ -15,19 +15,21 @@
  * fluid dynamic state definition.
  * \author: E.C.Bunschoten.
  */
-class TestFluidModel 
+class CTestFluidModel 
 {
 private:
     double P; // pressure value
     double T; // temperature value
     double rho; // density value
-
+    double P_in; // pressure value
+    double T_in; // temperature value
+    double rho_in;
     double R_gas; // fluid gas constant
 public:
 
-    //TestFluidModel(double P_in, double T_in, double rho_in) ;
+    CTestFluidModel(double P_in, double T_in, double rho_in) ;
 
-    
+    ~CTestFluidModel(void);
 
     void SetTDState_PT(double P, double T) ;
 

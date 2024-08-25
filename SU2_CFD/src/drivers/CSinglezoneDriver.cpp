@@ -29,6 +29,17 @@
 #include "../../include/definition_structure.hpp"
 #include "../../include/output/COutput.hpp"
 #include "../../include/iteration/CIteration.hpp"
+/*#include "../../../Common/include/parallelization/mpi_structure.hpp"
+#if defined(HAVE_PYBIND11)
+#include <Python.h>
+#include "../../../subprojects/pybind11/include/pybind11/functional.h"
+#include "../../../subprojects/pybind11/include/pybind11/embed.h"
+#include "../../../subprojects/pybind11/include/pybind11/pybind11.h"
+#include <mpi.h>
+namespace py = pybind11;
+#define USE_PYBIND11
+#endif*/
+
 
 CSinglezoneDriver::CSinglezoneDriver(char* confFile,
                        unsigned short val_nZone,
@@ -41,7 +52,24 @@ CSinglezoneDriver::CSinglezoneDriver(char* confFile,
   TimeIter = 0;
 }
 
+
 CSinglezoneDriver::~CSinglezoneDriver() = default;
+/*void CSinglezoneDriver::SetTDState_T_function(pybind11::function func){
+  double rho = func(300.0).cast<double>();  // Ensure the Python function returns an double
+  cout<<rho<<endl;
+  
+}
+
+PYBIND11_MODULE(pySU2_bindings,m){
+    py::class_<CSinglezoneDriver>(m, "CSinglezoneDriver")
+        .def(py::init<char*, short unsigned,MPI::Comm>())
+        //.def("CSinglezoneDriver",&CSinglezoneDriver::CSinglezoneDriver,
+             py::arg("confFile"),py::arg("val_nZone"),py::arg("MPI_Communicator"))
+        .def("SetTDState_Custom",&CSinglezoneDriver::SetTDState_T_function,"A function performing arithmetic calculation to find the density.",
+             py::arg("func"));
+}*/
+
+
 
 void CSinglezoneDriver::StartSolver() {
 

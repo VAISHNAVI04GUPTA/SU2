@@ -23,6 +23,4 @@ TEST_CASE("Embed_python", "[python_embedding]")
     CHECK(ans_var==Approx(7.7));
 
 
-    
-
 }
