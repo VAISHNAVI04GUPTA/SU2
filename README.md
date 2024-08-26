@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -45,27 +45,28 @@ Pybind11 is a lightweight header-only library that enables seamless interoperabi
 
 Currently, SU2 exploits the capabilities of the **Python wrapper** to couple the C++ codebase with an external structural solver. To extend this functionality into Look-up table interpolation of thermodynamic data, I have worked majorly on the following subpoints:
 
-- Set up interpolation methods in Python using the **Scipy** library and added them to SU2 using wrapper classes.
+- Set up interpolation methods in Python using the **Scipy** library and added them to SU2 using wrapper classes. The validity of interpolation       function used can be verified from this [repo](https://github.com/VAISHNAVI04GUPTA/GSOC-SU2/tree/main/flamelet_data).
 - Added Pybind11 library as a **submodule** into SU2
 - Created a linkage of passing Python functions in the wrapper to be passed as arguments in C++ functions using Pybind11.
 - A **Unit test case** showcasing the successful integration of Pybind11 to SU2 has also been added for new users.
 
 
 
-The Pybind11 functionality can now be enabled in SU2 by giving the meson command -Denable-Pybind11=true while building SU2.
+The Pybind11 functionality can now be enabled in SU2 by giving the meson command *-Denable-pybind11=true* while building SU2.
 
-The **TestFluidModel** class is used to compute the thermo-chemical state for combustion simulation. This class determines the thermo-chemical state based on a set of transported scalars. For the current application, the fuel considered was methane.
-
-The integration of the Python interpolation function has been made possible by using the **PYBIND\_MODULE** method of the Pybind library. The module wraps C++ functions into a module that can thus be imported into Python and used to pass the query variables. Secondly, the Python interpolation function is passed as an argument to the prediction function defined in SU2, which can be accessed from the wrapper and produce desirable results of Equation of State or other state-defining variables.
-
-The above functionality can be understood as : 
+The above functionality can be understood from the example Unit test case added to demonstrate the main objective : 
 
 ![](readme.drawio.png)
 
+The [**`TestFluidModel`**](SU2_CFD/src/fluid/CTestFluidModel.cpp) class contains functions designed to compute various fluid properties, such as density, pressure, and temperature. One critical function, **`SetTDState_Custom`**, calculates the progress variable, mixture fraction, and total enthalpy of a fluid. As we aim to enhance the prediction of the Thermodynamic (TD) state, additional properties are required. To compute these properties, an interpolation algorithm is necessary to accurately predict the required data based on query points. This is where the SciPy library comes into play.
 
+To seamlessly integrate an efficient interpolation method into C++, we utilize Python bindings of the interpolation function, implemented using Pybind11. The interpolation function, defined in the [Python wrapper](TestCases/py_wrapper/TestFluidModel/interpolation.py) file, can be passed as an argument to a corresponding C++ function.
 
+In the Python wrapper file, we define the interpolation function, which uses SciPy's KDTree function to interpolate the dataset and return the desired properties. Subsequently, we invoke the C++ function within Python through a [module](TestCases/py_wrapper/TestFluidModel/query.cpython-38-x86_64-linux-gnu.so) created for the **`TestFluidModel`** class via Pybind11, along with its member functions. The interpolation function and other relevant values are passed as arguments to the **`SetTDState_Custom`** function. This function, in turn, returns interpolated values to the C++ code, where further calculations are performed before the final output is returned to the Python wrapper.
 
+As a result, when the Python file is executed, we obtain the desired fluid properties and can make accurate predictions about the thermodynamic state of the fluid.
 
+**This Test case serves as a simple example showing the successful integration of Pybind into SU2 and its implementation in using different python functions seamlessly inside C++ codebase.**
 
 
 
@@ -83,7 +84,7 @@ The main roadblock is linking the two Python libraries (Pybind11 and Mpi4py) and
 
 ## <a name="_uclww4nm4ub6"></a>**What’s Left**
 
-The next steps in this project would include working with **mpi4py object creation** or defining a custom datatype in Pybind to link the two libraries and create a module for CDriver Classes. **There might be a possibility of writing a SWIG interface file for Pybind11 to integrate the library into pysu2 easily!**
+The next steps in this project would include working with **mpi4py object creation** or defining a custom datatype in Pybind to link the two libraries and create a module for CDriver Classes. **There might be a possibility of writing a SWIG interface file for Pybind11 to integrate the library into pysu2 easily.**
 
 These modules can then easily be imported into wrapper files, and the member functions can be used. Inside the Driver class, the Python function argument passed into C++ can be made into a **CConfig class** object and then be universally used in the **CFluidModel classes**.
 
