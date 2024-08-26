@@ -56,7 +56,7 @@ The Pybind11 functionality can now be enabled in SU2 by giving the meson command
 
 The above functionality can be understood from the example Unit test case added to demonstrate the main objective : 
 
-![](Untitled Diagram.drawio.png)
+![](Diagram.drawio.png)
 
 **1**: The [**TestFluidModel**](SU2_CFD/src/fluid/CTestFluidModel.cpp) class contains functions designed to compute various fluid properties, such as density, pressure, and temperature. One critical function, **`SetTDState_Custom`**, calculates the progress variable, mixture fraction, and total enthalpy of a fluid. As we aim to enhance the prediction of the Thermodynamic (TD) state, additional properties are required. To compute these properties, an interpolation algorithm is necessary to predict the required data based on query points accurately. This is where the SciPy library comes into play.
 
