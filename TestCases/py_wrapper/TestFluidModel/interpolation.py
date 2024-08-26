@@ -47,7 +47,7 @@ def Interpolate(Prog_var,Enth_Total,Mix_frac):
     kdtree_interpolated_values = kdtree_interpolate(values, kdtree, train_queries, train_outputs, k=k)
     return int(kdtree_interpolated_values[0][2])
 
-# Goal: pass the customPTfunction to the fluid_model_test to compute the density.
+# Goal: pass the Interpolate to the fluid_model_test to compute the result
 
-result=fluid_model_test.SetTDState_Custom(101325,300, Interpolate)
-print("result: %.3e" % result)
+results=fluid_model_test.SetTDState_Custom(101325,300, Interpolate)
+print("result: %.3e" % results)
