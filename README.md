@@ -45,7 +45,7 @@ Pybind11 is a lightweight header-only library that enables seamless interoperabi
 
 Currently, SU2 exploits the capabilities of the **Python wrapper** to couple the C++ codebase with an external structural solver. To extend this functionality into Look-up table interpolation of thermodynamic data, I have worked majorly on the following subpoints:
 
-- Set up interpolation methods in Python using the **Scipy** library and added them to SU2 using wrapper classes. The validity of interpolation       function used can be verified from this [repo](https://github.com/VAISHNAVI04GUPTA/GSOC-SU2/tree/main/flamelet_data).
+- Set up interpolation methods in Python using the **Scipy** library and added them to SU2 using wrapper classes. The validity of the interpolation function used can be verified from this [repo](https://github.com/VAISHNAVI04GUPTA/GSOC-SU2/tree/main/flamelet_data).
 - Added Pybind11 library as a **submodule** into SU2
 - Created a linkage of passing Python functions in the wrapper to be passed as arguments in C++ functions using Pybind11.
 - A **Unit test case** showcasing the successful integration of Pybind11 to SU2 has also been added for new users.
@@ -58,15 +58,19 @@ The above functionality can be understood from the example Unit test case added 
 
 ![](readme.drawio.png)
 
-The [**`TestFluidModel`**](SU2_CFD/src/fluid/CTestFluidModel.cpp) class contains functions designed to compute various fluid properties, such as density, pressure, and temperature. One critical function, **`SetTDState_Custom`**, calculates the progress variable, mixture fraction, and total enthalpy of a fluid. As we aim to enhance the prediction of the Thermodynamic (TD) state, additional properties are required. To compute these properties, an interpolation algorithm is necessary to accurately predict the required data based on query points. This is where the SciPy library comes into play.
+**1**: The [**TestFluidModel**](SU2_CFD/src/fluid/CTestFluidModel.cpp) class contains functions designed to compute various fluid properties, such as density, pressure, and temperature. One critical function, **`SetTDState_Custom`**, calculates the progress variable, mixture fraction, and total enthalpy of a fluid. As we aim to enhance the prediction of the Thermodynamic (TD) state, additional properties are required. To compute these properties, an interpolation algorithm is necessary to predict the required data based on query points accurately. This is where the SciPy library comes into play.
 
-To seamlessly integrate an efficient interpolation method into C++, we utilize Python bindings of the interpolation function, implemented using Pybind11. The interpolation function, defined in the [Python wrapper](TestCases/py_wrapper/TestFluidModel/interpolation.py) file, can be passed as an argument to a corresponding C++ function.
+**2 -> 1**: To seamlessly integrate an efficient interpolation method into C++, we utilize Python bindings of the interpolation function, implemented using Pybind11. 
+**3 -> 2**: The interpolation function, defined in the [Python wrapper](TestCases/py_wrapper/TestFluidModel/interpolation.py) file, can be passed as an argument to a corresponding C++ function.
 
-In the Python wrapper file, we define the interpolation function, which uses SciPy's KDTree function to interpolate the dataset and return the desired properties. Subsequently, we invoke the C++ function within Python through a [module](TestCases/py_wrapper/TestFluidModel/query.cpython-38-x86_64-linux-gnu.so) created for the **`TestFluidModel`** class via Pybind11, along with its member functions. The interpolation function and other relevant values are passed as arguments to the **`SetTDState_Custom`** function. This function, in turn, returns interpolated values to the C++ code, where further calculations are performed before the final output is returned to the Python wrapper.
+**3**: In the Python wrapper file, we define the interpolation function, which uses SciPy's **KDTree** function to interpolate the dataset and return the desired properties. 
+**4**: Subsequently, we invoke the C++ function within Python through a [module](TestCases/py_wrapper/TestFluidModel/query.cpython-38-x86_64-linux-gnu.so) created for the **`TestFluidModel`** class via Pybind11, along with its
+functions
+**1 -> 3**: The interpolation function and other relevant values are passed as arguments to the **`SetTDState_Custom`** function. This function, in turn, returns interpolated values to the C++ code, where further calculations are performed before the final output is returned to the Python wrapper.
 
-As a result, when the Python file is executed, we obtain the desired fluid properties and can make accurate predictions about the thermodynamic state of the fluid.
+**3 -> 5**: As a result, when the Python file is executed, we obtain the desired fluid properties and can make accurate predictions about the thermodynamic state of the fluid.
 
-**This Test case serves as a simple example showing the successful integration of Pybind into SU2 and its implementation in using different python functions seamlessly inside C++ codebase.**
+**This Test case serves as a simple example showing the successful integration of Pybind into SU2 and its implementation in using different Python functions seamlessly inside the C++ codebase.**
 
 
 
